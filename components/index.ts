@@ -1,0 +1,12 @@
+export { default as Header } from "./Header";
+export { default as Hero } from "./Hero";
+export { default as PracticeIntro } from "./PracticeIntro";
+export { default as Services } from "./Services";
+export { default as Team } from "./Team";
+export { default as Office } from "./Office";
+export { default as Reviews } from "./Reviews";
+export { default as Blog } from "./Blog";
+export { default as Visit } from "./Visit";
+export { default as Footer } from "./Footer";
+export { default as MobileBar } from "./MobileBar";
+export { default as ChatWidget } from "./ChatWidget";

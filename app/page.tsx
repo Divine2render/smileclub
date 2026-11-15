@@ -1,69 +1,153 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect } from "react";
+import "./page.css";
+import Header from "../components/Header";
+import Hero from "../components/Hero";
+import PracticeIntro from "../components/PracticeIntro";
+import Services from "../components/Services";
+import Team from "../components/Team";
+import Office from "../components/Office";
+import Reviews from "../components/Reviews";
+import Blog from "../components/Blog";
+import Visit from "../components/Visit";
+import Footer from "../components/Footer";
+import MobileBar from "../components/MobileBar";
+import ChatWidget from "../components/ChatWidget";
+
+export default function HomePage() {
+  useEffect(() => {
+    const menu = document.querySelector<HTMLElement>(".primary-nav");
+    if (!menu) return;
+
+    function closeMenus(except: Element | null = null): void {
+      menu.querySelectorAll<HTMLDetailsElement>("details[open]").forEach((item) => {
+        if (item !== except) item.open = false;
+      });
+    }
+    function onDocumentClick(event: MouseEvent): void {
+      const target = event.target instanceof Element ? event.target : null;
+      const summary = target?.closest("summary");
+      if (summary && menu.contains(summary)) closeMenus(summary.parentElement);
+      else if (!target || !menu.contains(target) || target.closest("a")) closeMenus();
+    }
+    function onMenuKeydown(event: KeyboardEvent): void {
+      const target = event.target instanceof Element ? event.target : null;
+      const item = target?.closest("details[open]");
+      if (event.key === "Escape" && item) {
+        closeMenus();
+        item.querySelector("summary")?.focus();
+      }
+    }
+    document.addEventListener("click", onDocumentClick);
+    menu.addEventListener("keydown", onMenuKeydown);
+
+    const navCheck = document.getElementById("navCheck") as HTMLInputElement | null;
+    function setNav(open: boolean): void {
+      if (navCheck) navCheck.checked = open;
+      if (!open) closeMenus();
+    }
+    function onMenuClick(event: MouseEvent): void {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target?.closest("a")) setNav(false);
+    }
+    function onGlobalKeydown(event: KeyboardEvent): void {
+      if (event.key === "Escape" && navCheck?.checked) {
+        setNav(false);
+        navCheck.focus();
+      }
+    }
+    menu.addEventListener("click", onMenuClick);
+    document.addEventListener("keydown", onGlobalKeydown);
+
+    const rows = document.getElementById("rows") as HTMLElement | null;
+    const pause = document.getElementById("pause") as HTMLButtonElement | null;
+    function onPause(): void {
+      if (!rows || !pause) return;
+      const paused = rows.classList.toggle("paused");
+      pause.setAttribute("aria-pressed", String(paused));
+      pause.setAttribute(
+        "aria-label",
+        paused ? "Play animation" : "Pause animation",
+      );
+      pause.innerHTML = paused
+        ? '<svg viewBox="0 0 12 12" fill="currentColor"><path d="M3 1.5v9l7.5-4.5z"/></svg>'
+        : '<svg viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="1.5" width="2.6" height="9" rx="1"/><rect x="7.4" y="1.5" width="2.6" height="9" rx="1"/></svg>';
+    }
+    pause?.addEventListener("click", onPause);
+
+    const button = document.getElementById("chatBtn") as HTMLButtonElement | null;
+    const chat = document.getElementById("chat") as HTMLElement | null;
+    const chatBody = document.getElementById("chatB") as HTMLElement | null;
+    function openChat(open: boolean): void {
+      if (!chat || !button) return;
+      chat.hidden = !open;
+      button.setAttribute("aria-expanded", String(open));
+      if (open) document.getElementById("chatI")?.focus();
+      else button.focus();
+    }
+    function onChatButton(): void {
+      openChat(chat?.hidden ?? true);
+    }
+    function onChatClose(): void {
+      openChat(false);
+    }
+    function onChatKeydown(event: KeyboardEvent): void {
+      if (event.key === "Escape") openChat(false);
+    }
+    function onChatSubmit(event: SubmitEvent): void {
+      event.preventDefault();
+      const input = document.getElementById("chatI") as HTMLInputElement | null;
+      const message = input?.value.trim();
+      if (!message || !chatBody) return;
+      const userMessage = document.createElement("div");
+      userMessage.className = "msg me";
+      userMessage.textContent = message;
+      chatBody.appendChild(userMessage);
+      const reply = document.createElement("div");
+      reply.className = "msg";
+      reply.textContent = "Thanks! A member of our team will reply shortly.";
+      chatBody.appendChild(reply);
+      input.value = "";
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+    button?.addEventListener("click", onChatButton);
+    document.getElementById("chatX")?.addEventListener("click", onChatClose);
+    chat?.addEventListener("keydown", onChatKeydown);
+    const chatForm = document.getElementById("chatF") as HTMLFormElement | null;
+    chatForm?.addEventListener("submit", onChatSubmit);
+
+    return () => {
+      document.removeEventListener("click", onDocumentClick);
+      menu.removeEventListener("keydown", onMenuKeydown);
+      menu.removeEventListener("click", onMenuClick);
+      document.removeEventListener("keydown", onGlobalKeydown);
+      pause?.removeEventListener("click", onPause);
+      button?.removeEventListener("click", onChatButton);
+      document
+        .getElementById("chatX")
+        ?.removeEventListener("click", onChatClose);
+      chat?.removeEventListener("keydown", onChatKeydown);
+      chatForm?.removeEventListener("submit", onChatSubmit);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <Header />
+      <main id="top">
+        <Hero />
+        <PracticeIntro />
+        <Services />
+        <Team />
+        <Office />
+        <Reviews />
+        <Blog />
+        <Visit />
       </main>
-    </div>
+      <Footer />
+      <MobileBar />
+      <ChatWidget />
+    </>
   );
 }
