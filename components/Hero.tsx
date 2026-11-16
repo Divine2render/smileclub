@@ -1,4 +1,26 @@
+"use client";
+
 import Image from "next/image";
+import { motion, type Variants } from "motion/react";
+
+const introVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.12,
+      staggerChildren: 0.16,
+    },
+  },
+};
+
+const introItemVariants: Variants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.72, ease: "easeOut" },
+  },
+};
 
 export default function Hero() {
   return (
@@ -11,25 +33,32 @@ export default function Hero() {
           fetchPriority="high"
           src="/images/image-02.jpg"
         />
-        <div className="wrap hero-intro">
-          <p className="hero-location">Family dentist in Houston, TX</p>
-          <h1 className="big" id="hero-title">
+        <motion.div
+          className="wrap hero-intro"
+          variants={introVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.p className="hero-location" variants={introItemVariants}>
+            Family dentist in Houston, TX
+          </motion.p>
+          <motion.h1 className="big" id="hero-title" variants={introItemVariants}>
             Dental care for every smile
-          </h1>
-          <p className="lead">
+          </motion.h1>
+          <motion.p className="lead" variants={introItemVariants}>
             From routine check-ups to braces and smile makeovers, our Houston
             team helps children and adults find care that fits their needs.
             General dentistry and orthodontics are available under one roof.
-          </p>
-          <div className="ctas">
+          </motion.p>
+          <motion.div className="ctas" variants={introItemVariants}>
             <a className="pill" href="#visit">
               Book an appointment
             </a>
             <a className="pill team-call" href="tel:+18329414010">
               Call our team
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
       <nav aria-label="Explore treatments" className="hero-treatments">
         <a href="#general">General dentistry</a>

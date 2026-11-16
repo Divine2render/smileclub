@@ -14,13 +14,13 @@ export default function RevealSection({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: from === "left" ? -18 : 18, y: 16 }}
+      initial={{ opacity: 0, x: from === "left" ? -46 : 46, y: 20 }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
+      viewport={{ once: true, amount: 0.16 }}
       transition={{
-        duration: 0.62,
+        duration: 0.82,
         delay,
-        ease: [0.22, 1, 0.36, 1],
+        ease: "easeOut",
       }}
     >
       {children}

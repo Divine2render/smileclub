@@ -139,28 +139,26 @@ export default function HomePage() {
     <MotionConfig reducedMotion="user">
       <Header />
       <main id="top">
-        <RevealSection>
-          <Hero />
-        </RevealSection>
-        <RevealSection delay={0.04} from="right">
+        <Hero />
+        <RevealSection delay={0.08} from="right">
           <PracticeIntro />
         </RevealSection>
         <RevealSection>
           <Services />
         </RevealSection>
-        <RevealSection delay={0.04} from="right">
+        <RevealSection delay={0.08} from="right">
           <Team />
         </RevealSection>
         <RevealSection>
           <Office />
         </RevealSection>
-        <RevealSection delay={0.04} from="right">
+        <RevealSection delay={0.08} from="right">
           <Reviews />
         </RevealSection>
         <RevealSection>
           <Blog />
         </RevealSection>
-        <RevealSection delay={0.04} from="right">
+        <RevealSection delay={0.08} from="right">
           <Visit />
         </RevealSection>
       </main>
