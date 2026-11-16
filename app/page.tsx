@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import PracticeIntro from "../components/PracticeIntro";
 import Services from "../components/Services";
+import PatientResults from "../components/PatientResults";
 import Team from "../components/Team";
 import Office from "../components/Office";
 import Reviews from "../components/Reviews";
@@ -145,6 +146,9 @@ export default function HomePage() {
         </RevealSection>
         <RevealSection>
           <Services />
+        </RevealSection>
+        <RevealSection delay={0.08} from="right">
+          <PatientResults />
         </RevealSection>
         <RevealSection delay={0.08} from="right">
           <Team />
