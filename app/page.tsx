@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { MotionConfig } from "motion/react";
 import "./page.css";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
@@ -14,22 +15,24 @@ import Visit from "../components/Visit";
 import Footer from "../components/Footer";
 import MobileBar from "../components/MobileBar";
 import ChatWidget from "../components/ChatWidget";
+import RevealSection from "../components/RevealSection";
 
 export default function HomePage() {
   useEffect(() => {
     const menu = document.querySelector<HTMLElement>(".primary-nav");
-    if (!menu) return;
+    if (menu === null) return;
+    const nav = menu;
 
     function closeMenus(except: Element | null = null): void {
-      menu.querySelectorAll<HTMLDetailsElement>("details[open]").forEach((item) => {
+      nav.querySelectorAll<HTMLDetailsElement>("details[open]").forEach((item) => {
         if (item !== except) item.open = false;
       });
     }
     function onDocumentClick(event: MouseEvent): void {
       const target = event.target instanceof Element ? event.target : null;
       const summary = target?.closest("summary");
-      if (summary && menu.contains(summary)) closeMenus(summary.parentElement);
-      else if (!target || !menu.contains(target) || target.closest("a")) closeMenus();
+      if (summary && nav.contains(summary)) closeMenus(summary.parentElement);
+      else if (!target || !nav.contains(target) || target.closest("a")) closeMenus();
     }
     function onMenuKeydown(event: KeyboardEvent): void {
       const target = event.target instanceof Element ? event.target : null;
@@ -40,7 +43,7 @@ export default function HomePage() {
       }
     }
     document.addEventListener("click", onDocumentClick);
-    menu.addEventListener("keydown", onMenuKeydown);
+    nav.addEventListener("keydown", onMenuKeydown);
 
     const navCheck = document.getElementById("navCheck") as HTMLInputElement | null;
     function setNav(open: boolean): void {
@@ -57,7 +60,7 @@ export default function HomePage() {
         navCheck.focus();
       }
     }
-    menu.addEventListener("click", onMenuClick);
+    nav.addEventListener("click", onMenuClick);
     document.addEventListener("keydown", onGlobalKeydown);
 
     const rows = document.getElementById("rows") as HTMLElement | null;
@@ -99,7 +102,7 @@ export default function HomePage() {
       event.preventDefault();
       const input = document.getElementById("chatI") as HTMLInputElement | null;
       const message = input?.value.trim();
-      if (!message || !chatBody) return;
+      if (!input || !message || !chatBody) return;
       const userMessage = document.createElement("div");
       userMessage.className = "msg me";
       userMessage.textContent = message;
@@ -119,8 +122,8 @@ export default function HomePage() {
 
     return () => {
       document.removeEventListener("click", onDocumentClick);
-      menu.removeEventListener("keydown", onMenuKeydown);
-      menu.removeEventListener("click", onMenuClick);
+      nav.removeEventListener("keydown", onMenuKeydown);
+      nav.removeEventListener("click", onMenuClick);
       document.removeEventListener("keydown", onGlobalKeydown);
       pause?.removeEventListener("click", onPause);
       button?.removeEventListener("click", onChatButton);
@@ -133,21 +136,39 @@ export default function HomePage() {
   }, []);
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <Header />
       <main id="top">
-        <Hero />
-        <PracticeIntro />
-        <Services />
-        <Team />
-        <Office />
-        <Reviews />
-        <Blog />
-        <Visit />
+        <RevealSection>
+          <Hero />
+        </RevealSection>
+        <RevealSection delay={0.04} from="right">
+          <PracticeIntro />
+        </RevealSection>
+        <RevealSection>
+          <Services />
+        </RevealSection>
+        <RevealSection delay={0.04} from="right">
+          <Team />
+        </RevealSection>
+        <RevealSection>
+          <Office />
+        </RevealSection>
+        <RevealSection delay={0.04} from="right">
+          <Reviews />
+        </RevealSection>
+        <RevealSection>
+          <Blog />
+        </RevealSection>
+        <RevealSection delay={0.04} from="right">
+          <Visit />
+        </RevealSection>
       </main>
-      <Footer />
+      <RevealSection>
+        <Footer />
+      </RevealSection>
       <MobileBar />
       <ChatWidget />
-    </>
+    </MotionConfig>
   );
 }
