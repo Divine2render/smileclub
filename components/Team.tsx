@@ -25,7 +25,7 @@ export default function Team() {
             <Image
               width={300}
               height={300}
-              src="/images/image-42.jpg"
+              src="/images/profile.webp"
               alt="Dr. Philip Onyirimba"
             />
           </article>
