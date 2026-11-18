@@ -25,15 +25,18 @@ export default function HomePage() {
     const nav = menu;
 
     function closeMenus(except: Element | null = null): void {
-      nav.querySelectorAll<HTMLDetailsElement>("details[open]").forEach((item) => {
-        if (item !== except) item.open = false;
-      });
+      nav
+        .querySelectorAll<HTMLDetailsElement>("details[open]")
+        .forEach((item) => {
+          if (item !== except) item.open = false;
+        });
     }
     function onDocumentClick(event: MouseEvent): void {
       const target = event.target instanceof Element ? event.target : null;
       const summary = target?.closest("summary");
       if (summary && nav.contains(summary)) closeMenus(summary.parentElement);
-      else if (!target || !nav.contains(target) || target.closest("a")) closeMenus();
+      else if (!target || !nav.contains(target) || target.closest("a"))
+        closeMenus();
     }
     function onMenuKeydown(event: KeyboardEvent): void {
       const target = event.target instanceof Element ? event.target : null;
@@ -46,7 +49,9 @@ export default function HomePage() {
     document.addEventListener("click", onDocumentClick);
     nav.addEventListener("keydown", onMenuKeydown);
 
-    const navCheck = document.getElementById("navCheck") as HTMLInputElement | null;
+    const navCheck = document.getElementById(
+      "navCheck",
+    ) as HTMLInputElement | null;
     function setNav(open: boolean): void {
       if (navCheck) navCheck.checked = open;
       if (!open) closeMenus();
@@ -80,7 +85,9 @@ export default function HomePage() {
     }
     pause?.addEventListener("click", onPause);
 
-    const button = document.getElementById("chatBtn") as HTMLButtonElement | null;
+    const button = document.getElementById(
+      "chatBtn",
+    ) as HTMLButtonElement | null;
     const chat = document.getElementById("chat") as HTMLElement | null;
     const chatBody = document.getElementById("chatB") as HTMLElement | null;
     function openChat(open: boolean): void {
@@ -170,7 +177,7 @@ export default function HomePage() {
         <Footer />
       </RevealSection>
       <MobileBar />
-      <ChatWidget />
+      {/* <ChatWidget /> */}
     </MotionConfig>
   );
 }
