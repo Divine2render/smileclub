@@ -26,7 +26,7 @@ export default function Services() {
         <div className="featured-grid">
           <article className="featured-treatment">
             <Image
-              src="/images/image-04.webp"
+              src="/images/featured-image-1.webp"
               alt=""
               width={480}
               height={480}
@@ -57,7 +57,7 @@ export default function Services() {
 
           <article className="featured-treatment">
             <Image
-              src="/images/image-05.webp"
+              src="/images/featured-image-2.webp"
               alt=""
               width={480}
               height={480}

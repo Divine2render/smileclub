@@ -21,7 +21,7 @@ export default function Office() {
           <Image
             width={420}
             height={315}
-            src="/images/image-54.jpg"
+            src="/images/images-office-4.jpeg"
             alt="Waiting area"
           />
           <figcaption>
@@ -33,7 +33,7 @@ export default function Office() {
           <Image
             width={420}
             height={315}
-            src="/images/image-55.jpg"
+            src="/images/images-office-2.jpeg"
             alt="Check-in window"
           />
           <figcaption>
@@ -45,7 +45,7 @@ export default function Office() {
           <Image
             width={420}
             height={315}
-            src="/images/image-56.jpg"
+            src="/images/images-office-5.jpeg"
             alt="Treatment room"
           />
           <figcaption>
@@ -57,7 +57,7 @@ export default function Office() {
           <Image
             width={420}
             height={315}
-            src="/images/image-57.jpg"
+            src="/images/images-office-3.jpeg"
             alt="Clinic hallway"
           />
           <figcaption>
@@ -75,6 +75,19 @@ export default function Office() {
           <figcaption>
             <strong>Easy to find.</strong> Parking is available outside. The
             entrance is on the side of the building.
+          </figcaption>
+        </figure>
+
+        <figure>
+          <Image
+            width={420}
+            height={315}
+            src="/images/images-office-7.jpeg"
+            alt="Front of the dental office"
+          />
+          <figcaption>
+            <strong>Outside View.</strong> A view of what the clinic looks like
+            from outside.
           </figcaption>
         </figure>
       </div>
