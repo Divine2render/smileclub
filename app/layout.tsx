@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Lora } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import { siteUrl } from "@/lib/site-url";
+import JsonLd from "@/components/JsonLd";
+import { dentistSchema } from "@/lib/schema";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,9 +10,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const lora = Lora({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-lora",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
@@ -31,6 +35,7 @@ export const metadata: Metadata = {
     title: "The Smile Club | Dentistry & Orthodontics in Houston, TX",
     description:
       "General dentistry, Invisalign and braces, cosmetic care, and dental implants in Houston, TX.",
+    images: ["/images/og.png"],
     url: siteUrl,
   },
   twitter: {
@@ -49,9 +54,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${lora.variable} h-full antialiased`}
+      className={`${inter.variable} ${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <JsonLd data={dentistSchema} />
+        {children}
+      </body>
     </html>
   );
 }
