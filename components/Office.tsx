@@ -69,7 +69,7 @@ export default function Office() {
           <Image
             width={420}
             height={315}
-            src="/images/image-58.jpg"
+            src="/images/image-58.png"
             alt="Front of the dental office"
           />
           <figcaption>
